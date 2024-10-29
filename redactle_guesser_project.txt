@@ -1,0 +1,47 @@
+GOAL:
+Build a program that can guess, or atleast narrow down, the possible answers to the game: https://redactle.net/
+
+
+Assumptions / Understood paramaters
+- The redactle answer changes every day
+- The answer is the title of an artile from wikipedia
+- Ony the articles in levels 1-4 are used. See: https://en.wikipedia.org/wiki/Wikipedia:Vital_articles
+- The titles dont have to be English words
+- Titles are ASCII characters. Not UTF8 or anything 'funny'.
+
+
+Method:
+User will enter the number of letters of the words in the title. EG: 6-3 (2 word, first with 6 characters and the second with 3 )
+The tool will list all known article titles that match the given word and letter counts.
+Prompted user to ask if they want to provide word letter counts of first sentence. Then display what matches title and first sentence.
+Pre-cache the titles, first sentance and first pharagraph of all valid articles.
+Make keys for for each by counting the characters in each word. "World History" == 5-7, "Viking Age" == 6-3
+Best initially done as 2 programs. First to build and populate the cache with the 2nd taking the user input, doing the lookup and showing results.
+
+
+redactle_guesser: 
+# Ensure the cache exists, populated and refreshed.
+# Capture and validate user inputs
+# Check every title in the cache with the matching key
+# Print the ones that match
+# Ask user if they would like to narrow results
+# If they do, Ask for the letter counts in the first sentance
+# Loop over the titles found earlier with the matching keys
+# Print title and first sentence where they match
+
+
+redactle_cacher:
+# For each level 1-4
+#   Do a http call to get: https://en.wikipedia.org/wiki/Wikipedia:Vital_articles/Level/[level_id]
+#   Parse the resulting HTML to find titles and links to articles
+#   Foreach title
+#     Do a HTTP call to get the articles page: https://en.wikipedia.org/wiki/[title]
+#     Parse resulting HTML for first pharagraph
+#     Parse first pharagraph for first sentence
+#     Capture word letter counts of title
+#     Capture word letter counts of first sentence
+#     Capture word letter counts of pharagraph 
+#     Cache URL + Title + Sentence + Pharagraph + word letter counts
+#     Display Title and word letter counts 
+# Display total titles cached (should be a around 10k)
+
